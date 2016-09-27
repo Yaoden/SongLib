@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane 
-	xmlns="http://javafx.com/javafx/8.0.40"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="view.SongLibController">
+<AnchorPane prefHeight="524.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SongLibController">
 
-	<ListView fx:id="listView" 
-		AnchorPane.topAnchor = "10"
-		AnchorPane.leftAnchor = "10" 
-		AnchorPane.rightAnchor = "10"
-		AnchorPane.bottomAnchor = "10"/>
+	<ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="295.0" prefWidth="132.0" AnchorPane.bottomAnchor="215.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="232.0" AnchorPane.topAnchor="14.0" />
+	
+	
+   <Button fx:id = "add" layoutX="80.0" layoutY="485.0" mnemonicParsing="false" onAction="#aed" text="Add" />
+   <Button fx:id = "edit" layoutX="137.0" layoutY="485.0" mnemonicParsing="false" onAction="#aed" text="Edit" />
+   <Button fx:id = "delete" layoutX="189.0" layoutY="485.0" mnemonicParsing="false" onAction= "#aed" text="Delete" />
+   
+   
+   <TextArea layoutX="155.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" promptText="Song Details" />
+   
+   
+   <TextField fx:id="song" layoutX="24.0" layoutY="335.0" promptText="Song Name" />
+   <TextField fx:id="artist" layoutX="24.0" layoutY="370.0" promptText="Artist" />
+   <TextField fx:id="album" layoutX="24.0" layoutY="406.0" promptText="Album" />
+   <TextField fx:id="year" layoutX="25.0" layoutY="441.0" promptText="Year" />
 	
 	
 </AnchorPane>
