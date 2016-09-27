@@ -27,7 +27,7 @@ public class SongLib extends Application {
 			e.printStackTrace();
 		}
 	}
-	//Testing commit from my Taehee Lee Compooper!!!
+	//Testing commit from my GitHub
 	public static void main(String[] args) {
 		launch(args);
 	}
