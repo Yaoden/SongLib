@@ -24,6 +24,7 @@ public class SongLibController {
 	
 	private ObservableList<String> obsList;
 	private SortedList<String> sortedList;
+	
 	public void start(Stage mainStage){
 
 		//testing purposes. REMOVE WHEN ASAP.
@@ -63,9 +64,7 @@ public class SongLibController {
 		Button b = (Button)e.getSource();
 		
 		if(b == add){
-			System.out.println("HUE");
 			if(song.getText().isEmpty()){
-				System.out.println("???");
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Song Library");
 				alert.setHeaderText("ERROR!");
@@ -78,6 +77,7 @@ public class SongLibController {
 				alert.setContentText("Artist name is required");
 				alert.showAndWait();
 			}
+			
 		}else if(b == delete){
 			if(sortedList.size() == 0){
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -88,13 +88,12 @@ public class SongLibController {
 			}else{
 				int index = listView.getSelectionModel().getSelectedIndex();
 				obsList.remove(sortedList.get(index));
-				/*
+
 				if(sortedList.size() != 0){
 					if(index+1 > sortedList.size()){
 						listView.getSelectionModel().select(index-1);
 					}
 				}
-				*/
 			}
 		}else{
 			
