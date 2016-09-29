@@ -15,7 +15,8 @@ import javafx.scene.control.Button;
 import Utility.SongInfo;
 
 public class SongLibController {
-	@FXML ListView<String> listView;
+	
+	@FXML ListView<SongInfo> listView;
 	@FXML Button add;
 	@FXML Button edit;
 	@FXML Button delete;
@@ -27,38 +28,35 @@ public class SongLibController {
 	
 	private ObservableList<SongInfo> obsList;
 	private SortedList<SongInfo> sortedSongList;
-	private ObservableList<String> obsnameList;
-	private SortedList<String> sortedList;
 	
 	public void start(){
 		
 		//testing purposes. REMOVE WHEN ASAP.
 		obsList = FXCollections.observableArrayList();
-		obsnameList = FXCollections.observableArrayList();
 		sortedSongList = obsList.sorted(new SongInfo());
-		sortedList = obsnameList.sorted();
 		
 		//when getting items from the file
+		/*
 		for(int i = 0; i < sortedSongList.size(); i++){
 			sortedList.add(sortedSongList.get(i).getSong());
 		}
-		
+		*/
 		listView.getSelectionModel().selectFirst();
 		//listener for when the user clicks on a song. Details should show.
-		listView.setItems(sortedList);
+		listView.setItems(sortedSongList);
 		listView
 		.getSelectionModel()
 		.selectedItemProperty()
 		.addListener(
 				(obs, oldVal, newVal) -> 
-				showItem(oldVal,newVal)); 
+				showItem()); 
 	}
 	
 	//NOTE: ONLY CHANGES THE SONG DETAILS ON ITEM SELECTION BUT NOT WHEN THE ITEM ITSELF IS CHANGED THROUGH THE EDIT BUTTON.
-	private void showItem(String old, String n) {                
+	private void showItem() {                
 		int index = listView.getSelectionModel().getSelectedIndex();
 		if(index > -1){
-			details.setText(sortedSongList.get(index).toString());
+			details.setText(sortedSongList.get(index).getInfo());
 		}
 	}
 
@@ -90,7 +88,7 @@ public class SongLibController {
 			}
 		}else if(b == delete){
 			//error check incase list is empty
-			if(sortedList.size() == 0){
+			if(sortedSongList.size() == 0){
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Song Library");
 				alert.setHeaderText("ERROR!");
@@ -134,7 +132,6 @@ public class SongLibController {
 
 		//adding them into their corrsponding obsList
 		obsList.add(item);
-		obsnameList.add(item.getSong());
 		
 		listView.getSelectionModel().select(sortedSongList.indexOf(item));
 		//clear textboxes
@@ -149,9 +146,8 @@ public class SongLibController {
 	private void delete(){
 		int index = listView.getSelectionModel().getSelectedIndex();
 		obsList.remove(sortedSongList.get(index));
-		obsnameList.remove(sortedList.get(index));
-		if(sortedList.size() != 0){
-			if(index+1 > sortedList.size()){
+		if(sortedSongList.size() != 0){
+			if(index+1 > sortedSongList.size()){
 				listView.getSelectionModel().selectPrevious();
 			}
 		}else{
@@ -164,10 +160,6 @@ public class SongLibController {
 		
 		//index of the selected item
 		int index = listView.getSelectionModel().getSelectedIndex(); 	
-		
-		//obtains the corresponding song name in the unsorted name list
-		int nameindex = obsnameList.indexOf(sortedList.get(index)); 	
-		
 		//obtains the corresponding song info in the unsorted song info list
 		int songinfoindex = obsList.indexOf(sortedSongList.get(index));
 		
@@ -176,7 +168,6 @@ public class SongLibController {
 		//the obsList and not when the fields in the obsList items are edited.
 		SongInfo item = new SongInfo();
 		if(!song.getText().isEmpty()){
-			obsnameList.set(nameindex, song.getText().trim());
 			item.setSong(song.getText().trim());
 		}else{
 			item.setSong(sortedSongList.get(index).getSong());
@@ -197,7 +188,8 @@ public class SongLibController {
 			item.setYear(sortedSongList.get(index).getYear());
 		}
 		obsList.set(songinfoindex, item);
-		details.setText(obsList.get(songinfoindex).toString());
+		
+		details.setText(obsList.get(songinfoindex).getInfo());
 		
 		song.clear();
 		artist.clear();

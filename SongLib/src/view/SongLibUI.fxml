@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- Matthew Ya, Taehee Lee	 -->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="366.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SongLibController">
+<AnchorPane prefHeight="360.0" prefWidth="384.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SongLibController">
 
-	<ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="309.0" prefWidth="175.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="10.0" />
+	<ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="309.0" prefWidth="175.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="10.0" />
 	
 	
-   <Button fx:id="add" layoutX="196.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="77.0" text="Add" />
-   <Button fx:id="edit" layoutX="275.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="77.0" text="Edit" />
+   <Button fx:id="add" layoutX="196.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="87.0" text="Add" />
+   <Button fx:id="edit" layoutX="284.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="87.0" text="Edit" />
    <Button fx:id="delete" layoutX="9.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="175.0" text="Delete" />
    
    
-   <TextArea fx:id="details" layoutX="196.0" layoutY="10.0" prefHeight="176.0" prefWidth="158.0" promptText="Song Details" />
+   <TextArea fx:id="details" layoutX="196.0" layoutY="10.0" prefHeight="176.0" prefWidth="175.0" promptText="Song Details" />
    
    
-   <TextField fx:id="song" layoutX="196.0" layoutY="197.0" prefHeight="25.0" prefWidth="158.0" promptText="Song Name" />
-   <TextField fx:id="artist" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="158.0" promptText="Artist" />
-   <TextField fx:id="album" layoutX="196.0" layoutY="260.0" prefHeight="25.0" prefWidth="158.0" promptText="Album" />
-   <TextField fx:id="year" layoutX="196.0" layoutY="293.0" prefHeight="25.0" prefWidth="158.0" promptText="Year" />
+   <TextField fx:id="song" layoutX="196.0" layoutY="197.0" prefHeight="25.0" prefWidth="175.0" promptText="Song Name" />
+   <TextField fx:id="artist" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="175.0" promptText="Artist" />
+   <TextField fx:id="album" layoutX="196.0" layoutY="260.0" prefHeight="25.0" prefWidth="175.0" promptText="Album" />
+   <TextField fx:id="year" layoutX="196.0" layoutY="293.0" prefHeight="25.0" prefWidth="175.0" promptText="Year" />
 	
 	
 </AnchorPane>

@@ -34,8 +34,11 @@ public class SongInfo implements Comparator<SongInfo>{
 	public void setAlbum(String album){
 		this.album = album;
 	}
-	public String toString(){
+	public String getInfo(){
 		return "Song: "+ this.song + "\n" + "Artist: " + this.artist + "\n"   + "Album: " + this.album + "\n" + "Year: " + this.year + "\n";
+	}
+	public String toString(){
+		return this.song;
 	}
 	public int compare(SongInfo first, SongInfo second){
 		if(first.getSong().equals(second.getSong())){
