@@ -17,7 +17,7 @@ public class SongLib extends Application {
 			AnchorPane root = (AnchorPane)loader.load();
 
 			SongLibController listController = loader.getController();
-			listController.start(primaryStage);
+			listController.start();
 
 			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
