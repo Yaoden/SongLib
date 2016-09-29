@@ -21,10 +21,10 @@
    <TextArea fx:id="details" layoutX="196.0" layoutY="10.0" prefHeight="176.0" prefWidth="175.0" promptText="Song Details" />
    
    
-   <TextField fx:id="song" layoutX="196.0" layoutY="197.0" prefHeight="25.0" prefWidth="175.0" promptText="Song Name" />
-   <TextField fx:id="artist" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="175.0" promptText="Artist" />
-   <TextField fx:id="album" layoutX="196.0" layoutY="260.0" prefHeight="25.0" prefWidth="175.0" promptText="Album" />
-   <TextField fx:id="year" layoutX="196.0" layoutY="293.0" prefHeight="25.0" prefWidth="175.0" promptText="Year" />
+   <TextField fx:id="song" layoutX="196.0" layoutY="197.0" prefHeight="25.0" prefWidth="175.0" promptText="Song Name (Required)" />
+   <TextField fx:id="artist" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="175.0" promptText="Artist (Required)" />
+   <TextField fx:id="album" layoutX="196.0" layoutY="260.0" prefHeight="25.0" prefWidth="175.0" promptText="Album (Optional)" />
+   <TextField fx:id="year" layoutX="196.0" layoutY="293.0" prefHeight="25.0" prefWidth="175.0" promptText="Year (Optional)" />
 	
 	
 </AnchorPane>

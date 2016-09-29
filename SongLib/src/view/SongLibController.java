@@ -31,7 +31,6 @@ public class SongLibController {
 	
 	public void start(){
 		
-		//testing purposes. REMOVE WHEN ASAP.
 		obsList = FXCollections.observableArrayList();
 		sortedSongList = obsList.sorted(new SongInfo());
 		
@@ -42,6 +41,7 @@ public class SongLibController {
 		}
 		*/
 		listView.getSelectionModel().selectFirst();
+		
 		//listener for when the user clicks on a song. Details should show.
 		listView.setItems(sortedSongList);
 		listView
@@ -55,7 +55,7 @@ public class SongLibController {
 	//NOTE: ONLY CHANGES THE SONG DETAILS ON ITEM SELECTION BUT NOT WHEN THE ITEM ITSELF IS CHANGED THROUGH THE EDIT BUTTON.
 	private void showItem() {                
 		int index = listView.getSelectionModel().getSelectedIndex();
-		if(index > -1){
+		if(index != -1){
 			details.setText(sortedSongList.get(index).getInfo());
 		}
 	}
@@ -187,8 +187,8 @@ public class SongLibController {
 		}else{
 			item.setYear(sortedSongList.get(index).getYear());
 		}
-		obsList.set(songinfoindex, item);
 		
+		obsList.set(songinfoindex, item);
 		details.setText(obsList.get(songinfoindex).getInfo());
 		
 		song.clear();
