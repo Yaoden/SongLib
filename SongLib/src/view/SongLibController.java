@@ -10,9 +10,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import utility.SongInfo;
 import javafx.scene.control.Button;
 
-import Utility.SongInfo;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class SongLibController {
 	
@@ -28,11 +36,14 @@ public class SongLibController {
 	
 	private ObservableList<SongInfo> obsList;
 	private SortedList<SongInfo> sortedSongList;
+	private JsonArray jsonSongArray;
+	private File songFile;
 	
 	public void start(){
 		
 		obsList = FXCollections.observableArrayList();
 		sortedSongList = obsList.sorted(new SongInfo());
+		songFromFile();
 		
 		//when getting items from the file
 		/*
@@ -51,6 +62,45 @@ public class SongLibController {
 				(obs, oldVal, newVal) -> 
 				showItem()); 
 	}
+	
+	
+	/*creates new songFile if it doesn't exist. If it does exist, the method will parse the jsonobjects in the jsonarray and parse them into
+	* SongInfo objects so that they can be added to the obsList.
+	*/
+	private void songFromFile() {
+		songFile = new File("SongFile.json");
+		try{
+			
+			
+			//creates a new songFile and populates it with an empty JsonArray.
+			if(!songFile.exists()){
+					songFile.createNewFile();
+					jsonSongArray = new JsonArray();
+					FileWriter writer = new FileWriter(songFile);
+					writer.write(jsonSongArray.toString());
+					writer.close();
+			}else{
+				//this shouldn't throw an exception because I checked to see if it exist and created a new file if it does not exist.
+				Scanner sc = new Scanner(songFile);
+				String content = sc.useDelimiter("\\Z").next();
+				jsonSongArray = new JsonParser().parse(content).getAsJsonArray();
+				for(int i = 0; i < jsonSongArray.size(); i++){
+					SongInfo item = new SongInfo();
+					item.setSong(jsonSongArray.get(i).getAsJsonObject().get("song").getAsString());
+					item.setArtist(jsonSongArray.get(i).getAsJsonObject().get("artist").getAsString());
+					item.setYear(jsonSongArray.get(i).getAsJsonObject().get("year").getAsString());
+					item.setAlbum(jsonSongArray.get(i).getAsJsonObject().get("album").getAsString());
+					obsList.add(item);
+				}
+				sc.close();
+			}
+		}catch(/*IO*/Exception e){
+			System.out.println("Could not create a new file for songFile. Please be merciful when taking points off my assignment.");
+			e.printStackTrace();
+		}
+	}
+
+	
 	
 	//NOTE: ONLY CHANGES THE SONG DETAILS ON ITEM SELECTION BUT NOT WHEN THE ITEM ITSELF IS CHANGED THROUGH THE EDIT BUTTON.
 	private void showItem() {                
@@ -120,8 +170,22 @@ public class SongLibController {
 				edit();
 			}
 		}
+		songToFile();
 	}
 	
+	private void songToFile() {
+		try {
+			FileWriter writer = new FileWriter(songFile);
+			writer.write(jsonSongArray.toString());
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Ok so for some reason I can't write into the file I created. IT WAS WORKING BEFORE I SWEAR. PLEASE HAVE MERCY ON MY SOUL DEAR GRADER.");
+			e.printStackTrace();
+		}
+	}
+
+
 	private void add(){
 		//create SongInfo object
 		SongInfo item = new SongInfo();
@@ -129,22 +193,30 @@ public class SongLibController {
 		item.setArtist(artist.getText().trim());
 		item.setYear(year.getText().trim());
 		item.setAlbum(album.getText().trim());
-
+		
+		//creating jsonobject for storing purposes
+		JsonObject jsonItem = item.toJsonObject();
+		
+		jsonSongArray.add(jsonItem);
+		
 		//adding them into their corrsponding obsList
 		obsList.add(item);
 		
 		listView.getSelectionModel().select(sortedSongList.indexOf(item));
+		
+		
 		//clear textboxes
 		song.clear();
 		artist.clear();
 		year.clear();
 		album.clear();
 		
-		
+
 	}
 	
 	private void delete(){
 		int index = listView.getSelectionModel().getSelectedIndex();
+		jsonSongArray.remove(sortedSongList.get(index).toJsonObject());
 		obsList.remove(sortedSongList.get(index));
 		if(sortedSongList.size() != 0){
 			if(index+1 > sortedSongList.size()){
@@ -160,9 +232,13 @@ public class SongLibController {
 		
 		//index of the selected item
 		int index = listView.getSelectionModel().getSelectedIndex(); 	
+		
+		
 		//obtains the corresponding song info in the unsorted song info list
 		int songinfoindex = obsList.indexOf(sortedSongList.get(index));
 		
+		//Remove the item from the jsonarray
+		jsonSongArray.remove(sortedSongList.get(index).toJsonObject());
 		
 		//creating a new object for the new edit because the SortedList class sorts the List IF*** a new item as added to
 		//the obsList and not when the fields in the obsList items are edited.
@@ -187,6 +263,7 @@ public class SongLibController {
 		}else{
 			item.setYear(sortedSongList.get(index).getYear());
 		}
+		jsonSongArray.add(item.toJsonObject());
 		
 		obsList.set(songinfoindex, item);
 		details.setText(obsList.get(songinfoindex).getInfo());

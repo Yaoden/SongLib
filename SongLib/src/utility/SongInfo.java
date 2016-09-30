@@ -1,6 +1,8 @@
-package Utility;
+package utility;
 //Matthew Ya, Taehee Lee	
 import java.util.Comparator;
+
+import com.google.gson.JsonObject;
 
 public class SongInfo implements Comparator<SongInfo>{
 	private String song;
@@ -45,5 +47,13 @@ public class SongInfo implements Comparator<SongInfo>{
 			return first.getArtist().compareTo(second.getArtist());
 		}
 		return first.getSong().compareTo(second.getSong());
+	}
+	public JsonObject toJsonObject(){
+		JsonObject jsonItem = new JsonObject();
+		jsonItem.addProperty("song", this.song);
+		jsonItem.addProperty("artist", this.artist);
+		jsonItem.addProperty("year", this.year);
+		jsonItem.addProperty("album", this.album);
+		return jsonItem;
 	}
 }
