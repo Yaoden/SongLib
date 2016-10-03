@@ -1,0 +1,2 @@
+A song library written as a javafx project.
+Important note: In order to run this project you need include the com.google.gson library version 2.3.1.
