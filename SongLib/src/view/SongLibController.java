@@ -28,6 +28,7 @@ public class SongLibController {
 	@FXML Button add;
 	@FXML Button edit;
 	@FXML Button delete;
+	@FXML Button cancel;
 	@FXML TextField song;
 	@FXML TextField artist;
 	@FXML TextField album;
@@ -38,6 +39,9 @@ public class SongLibController {
 	private SortedList<SongInfo> sortedSongList;
 	private JsonArray jsonSongArray;
 	private File songFile;
+	private SongInfo lastItem;
+	private Button lastButton;
+	private int lastIndex; //used for edit
 	
 	public void start(){
 		
@@ -135,7 +139,9 @@ public class SongLibController {
 				alert.showAndWait();
 			}else{
 				add();
+				lastButton = b;
 			}
+			
 		}else if(b == delete){
 			//error check incase list is empty
 			if(sortedSongList.size() == 0){
@@ -152,8 +158,9 @@ public class SongLibController {
 				alert.showAndWait();
 			}else{
 				delete();
+				lastButton = b;
 			}
-		}else{
+		}else if(b == edit){
 			if(duplicate(song.getText().trim(), artist.getText().trim())){
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Song Library");
@@ -168,11 +175,48 @@ public class SongLibController {
 				alert.showAndWait();
 			}else{
 				edit();
+				lastButton = b;
+			}
+		}else{
+			if(lastItem == null || lastButton == null){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Song Library");
+				alert.setHeaderText("ERROR!");
+				alert.setContentText("Latest action already canceled.");
+				alert.showAndWait();
+			}else{
+				cancel();
 			}
 		}
 		songToFile();
 	}
-	
+	private void cancel(){
+		if(lastButton == add){
+			int index = sortedSongList.indexOf(lastItem);
+			obsList.remove(lastItem);
+			jsonSongArray.remove(lastItem.toJsonObject());
+			if(sortedSongList.size() != 0){
+				if(index+1 > sortedSongList.size()){
+					listView.getSelectionModel().selectPrevious();
+				}
+			}else{
+				listView.getSelectionModel().clearSelection();
+				details.clear();
+			}
+		}else if(lastButton == delete){
+			obsList.add(lastItem);
+			jsonSongArray.add(lastItem.toJsonObject());
+			listView.getSelectionModel().select(lastItem);
+		}else if(lastButton == edit){
+			jsonSongArray.remove(obsList.get(lastIndex).toJsonObject());
+			jsonSongArray.add(lastItem.toJsonObject());
+			obsList.set(lastIndex, lastItem);
+			listView.getSelectionModel().select(lastItem);
+		}
+		lastButton = null;
+		lastIndex = -1;
+		lastItem = null;
+	}
 	private void songToFile() {
 		try {
 			FileWriter writer = new FileWriter(songFile);
@@ -201,8 +245,8 @@ public class SongLibController {
 		
 		//adding them into their corrsponding obsList
 		obsList.add(item);
-		
-		listView.getSelectionModel().select(sortedSongList.indexOf(item));
+		lastItem = item;
+		listView.getSelectionModel().select(item);
 		
 		
 		//clear textboxes
@@ -216,6 +260,7 @@ public class SongLibController {
 	
 	private void delete(){
 		int index = listView.getSelectionModel().getSelectedIndex();
+		lastItem = sortedSongList.get(index);
 		jsonSongArray.remove(sortedSongList.get(index).toJsonObject());
 		obsList.remove(sortedSongList.get(index));
 		if(sortedSongList.size() != 0){
@@ -236,6 +281,8 @@ public class SongLibController {
 		
 		//obtains the corresponding song info in the unsorted song info list
 		int songinfoindex = obsList.indexOf(sortedSongList.get(index));
+		
+		lastItem = sortedSongList.get(index);
 		
 		//Remove the item from the jsonarray
 		jsonSongArray.remove(sortedSongList.get(index).toJsonObject());
@@ -266,8 +313,8 @@ public class SongLibController {
 		jsonSongArray.add(item.toJsonObject());
 		
 		obsList.set(songinfoindex, item);
-		details.setText(obsList.get(songinfoindex).getInfo());
-		
+		listView.getSelectionModel().select(item);
+		lastIndex = songinfoindex;
 		song.clear();
 		artist.clear();
 		year.clear();

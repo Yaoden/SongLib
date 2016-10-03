@@ -13,10 +13,10 @@
 	<ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="309.0" prefWidth="175.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="10.0" />
 	
 	
-   <Button fx:id="add" layoutX="196.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="87.0" text="Add" />
-   <Button fx:id="edit" layoutX="284.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="87.0" text="Edit" />
-   <Button fx:id="delete" layoutX="9.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="175.0" text="Delete" />
-   
+   <Button fx:id="add" layoutX="196.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="57.0" text="Add" />
+   <Button fx:id="edit" layoutX="255.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="57.0" text="Edit" />
+   <Button fx:id="delete" layoutX="313.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="57.0" text="Delete" />
+   <Button fx:id="cancel" layoutX="10.0" layoutY="327.0" mnemonicParsing="false" onAction="#aed" prefHeight="25.0" prefWidth="175.0" text="Cancel" />
    
    <TextArea fx:id="details" layoutX="196.0" layoutY="10.0" prefHeight="176.0" prefWidth="175.0" promptText="Song Details" />
    
@@ -25,6 +25,5 @@
    <TextField fx:id="artist" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="175.0" promptText="Artist (Required)" />
    <TextField fx:id="album" layoutX="196.0" layoutY="260.0" prefHeight="25.0" prefWidth="175.0" promptText="Album (Optional)" />
    <TextField fx:id="year" layoutX="196.0" layoutY="293.0" prefHeight="25.0" prefWidth="175.0" promptText="Year (Optional)" />
-	
-	
+ 
 </AnchorPane>
